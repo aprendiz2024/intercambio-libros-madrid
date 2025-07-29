@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { Search, Book, Plus, Filter, Star, MessageCircle, Eye, User, BookOpen, Brain, DollarSign, Microscope, Palette, Zap, Upload, X } from 'lucide-react';
+import { Search, Book, Plus, Filter, Star, MessageCircle, Eye, User, BookOpen, Brain, DollarSign, Euro, Microscope, Palette, Zap, Upload, X } from 'lucide-react';
 
 // Configuración Supabase
 const supabase = createClient(
@@ -45,6 +45,52 @@ export default function BookPlatform() {
       setCategories(data || []);
     } catch (err) {
       console.error('Error loading categories:', err);
+      // Fallback con categorías por defecto
+      const defaultCategories = [
+        { 
+          id: 'development', 
+          name: 'Desarrollo Personal & Psicología', 
+          icon: 'Brain', 
+          color: 'bg-purple-500',
+          description: 'Hábitos, mentalidad, bienestar, relaciones'
+        },
+        { 
+          id: 'business', 
+          name: 'Negocios & Finanzas', 
+          icon: 'Euro', 
+          color: 'bg-green-500',
+          description: 'Inversión, emprendimiento, gestión, economía'
+        },
+        { 
+          id: 'science', 
+          name: 'Ciencia & Tecnología', 
+          icon: 'Microscope', 
+          color: 'bg-blue-500',
+          description: 'Divulgación científica, tech, innovación, salud'
+        },
+        { 
+          id: 'history', 
+          name: 'Historia & Sociedad', 
+          icon: 'BookOpen', 
+          color: 'bg-amber-500',
+          description: 'Biografías, política, filosofía, cultura'
+        },
+        { 
+          id: 'creativity', 
+          name: 'Creatividad & Arte', 
+          icon: 'Palette', 
+          color: 'bg-pink-500',
+          description: 'Diseño, escritura, arte, música, creatividad'
+        },
+        { 
+          id: 'productivity', 
+          name: 'Productividad & Carrera', 
+          icon: 'Zap', 
+          color: 'bg-orange-500',
+          description: 'Liderazgo, gestión tiempo, skills, profesional'
+        }
+      ];
+      setCategories(defaultCategories);
     }
   };
 
@@ -63,6 +109,24 @@ export default function BookPlatform() {
       setBooks(data || []);
     } catch (err) {
       console.error('Error loading books:', err);
+      // Datos demo para que funcione
+      const sampleBooks = [
+        {
+          id: 1,
+          title: "El Quijote",
+          author: "Cervantes",
+          category_id: "history",
+          difficulty: "Clásico",
+          description: "La obra maestra de la literatura española",
+          tags: ["clásico", "literatura"],
+          rating: 4.8,
+          review_count: 150,
+          view_count: 500,
+          profiles: { full_name: "Usuario Demo" },
+          created_at: "2025-01-15"
+        }
+      ];
+      setBooks(sampleBooks);
     }
   };
 
@@ -89,7 +153,6 @@ export default function BookPlatform() {
             difficulty: formData.difficulty,
             description: formData.description,
             tags: tagsArray,
-            // uploaded_by se maneja automáticamente con auth
           }
         ])
         .select();
@@ -133,7 +196,7 @@ export default function BookPlatform() {
 
   const getIconComponent = (iconName) => {
     const icons = {
-      Brain, DollarSign, Microscope, BookOpen, Palette, Zap
+      Brain, DollarSign, Euro, Microscope, BookOpen, Palette, Zap
     };
     return icons[iconName] || Book;
   };
@@ -143,11 +206,11 @@ export default function BookPlatform() {
       {/* Hero Section */}
       <div className="text-center py-12 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Descubre, Comparte y Aprende
+          Intercambia Libros en Madrid
         </h1>
         <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-          La comunidad más inteligente para intercambiar libros y conocimiento. 
-          Organizado de forma que realmente puedas encontrar lo que buscas.
+          La comunidad madrileña para intercambiar libros y conocimiento. 
+          Encuentra lectores cerca de ti y descubre tu próxima lectura favorita.
         </p>
         <div className="flex gap-4 justify-center">
           <button 
@@ -178,8 +241,8 @@ export default function BookPlatform() {
           <div className="text-gray-600">Categorías Activas</div>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-sm border text-center">
-          <div className="text-3xl font-bold text-purple-600 mb-2">Beta</div>
-          <div className="text-gray-600">Versión Actual</div>
+          <div className="text-3xl font-bold text-purple-600 mb-2">🏛️</div>
+          <div className="text-gray-600">Madrid Capital</div>
         </div>
       </div>
 
@@ -309,7 +372,7 @@ export default function BookPlatform() {
           <p className="text-gray-600 mb-4">
             {searchQuery || selectedCategory 
               ? 'Intenta con otros términos de búsqueda o explora otras categorías.'
-              : 'Sé el primero en compartir un libro con la comunidad.'
+              : 'Sé el primero en compartir un libro en la comunidad madrileña.'
             }
           </p>
           {!searchQuery && !selectedCategory && (
@@ -563,9 +626,9 @@ export default function BookPlatform() {
                 setSelectedCategory(null);
                 setSearchQuery('');
               }}
-              className="text-2xl font-bold text-blue-600 cursor-pointer hover:text-blue-700 transition-colors"
+              className="text-xl font-bold text-blue-600 cursor-pointer hover:text-blue-700 transition-colors"
             >
-              📚 BookShare
+              📚 Intercambio Libros Madrid
             </div>
             <div className="hidden md:flex gap-6">
               <button
@@ -589,8 +652,8 @@ export default function BookPlatform() {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <div className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
-              Beta
+            <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+              🚀 Beta Madrid
             </div>
           </div>
         </div>
