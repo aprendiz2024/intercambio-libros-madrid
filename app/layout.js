@@ -1,3 +1,4 @@
+import './globals.css' // o la ruta donde pongas el CSS
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
